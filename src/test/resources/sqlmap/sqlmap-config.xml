@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!DOCTYPE sqlMapConfig     
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+	"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" lazyLoadingEnabled="true"
+		enhancementEnabled="true" maxSessions="1000" maxTransactions="300"
+		maxRequests="1500" classInfoCacheEnabled="true" errorTracingEnabled="false"
+		statementCachingEnabled="true" useStatementNamespaces="false" />
+	<sqlMap resource="sqlmap/mapping/sqlMap-TradePeriodRecord.xml" />
+	<sqlMap resource="sqlmap/mapping/sqlMap-TradeJikaiRecord.xml" />
+	<sqlMap resource="sqlmap/mapping/sqlMap-TradeSportRecord.xml" />
+	<sqlMap resource="sqlmap/mapping/sqlMap-ManagerJcPool.xml" />
+	<sqlMap resource="sqlmap/mapping/sqlMap-ManagerJcOdds.xml" />
+
+</sqlMapConfig>

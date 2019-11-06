@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<!-- 采样投注记录各状态值的数据（投注状态、兑奖状态），反馈代销者投注记录号 -->
+	<select id="queryEachStateAgentSidLt" parameterClass="java.lang.Integer"
+		resultClass="test.common.db.model.BetRecordModel">
+		SELECT AGENTNO, AGENTSERIAL
+		FROM (SELECT AGENTSERIAL,
+		AGENTNO,
+		BETSTATE,
+		ROW_NUMBER()
+		OVER(PARTITION BY BETSTATE ORDER BY BETTIME DESC) NUM
+		FROM
+		TRADE_PERIOD_RECORD
+		WHERE AGENTSERIAL IS NOT NULL)
+		<![CDATA[
+		WHERE NUM <= #count#
+		]]>
+		UNION
+		SELECT AGENTNO, AGENTSERIAL
+		FROM (SELECT BETSTATE,
+		SENDSTATE,
+		AGENTSERIAL,
+		AGENTNO,
+		ROW_NUMBER() OVER(PARTITION BY SENDSTATE ORDER BY
+		BETTIME
+		DESC) NUM
+		FROM (SELECT BETSTATE, SENDSTATE, AGENTSERIAL,
+		AGENTNO, BETTIME
+		FROM
+		TRADE_PERIOD_RECORD
+		WHERE BETSTATE = 2
+		AND
+		AGENTSERIAL IS NOT NULL))
+		<![CDATA[
+		WHERE NUM <= #count#
+		]]>
+	</select>
+
+</sqlMap>

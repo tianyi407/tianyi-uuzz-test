@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<!-- 查询投注成功未刮开投注记录 -->
+	<select id="querySellingJcPools" resultClass="test.common.db.model.ManagerJcPoolModel">
+SELECT P.POOLID,
+       P.GAMECODE,
+       P.HANDICAP,
+       P.SALEENDTIME,
+       P.MATCHID,
+       P.RESULT,
+       P.POOLSTATE,
+       P.CHANNELSTATE,
+       P.SYSSALESTATE,
+       P.SYSSALEENDTIME,
+       P.SPORT_NO AS SPORTNO,
+       P.ALLUP,
+       P.SINGLE,
+       P.CHNLALLUP,
+       P.CHNLSINGLE,
+       P.ODDSTYPE,
+       P.INITIALTIME,
+       P.CREATETIME,
+       P.UPDATETIME
+  FROM MANAGER_JC_POOL P
+ WHERE P.SPORT_NO = 1
+  <![CDATA[
+   AND P.SYSSALEENDTIME > SYSDATE
+    ]]>
+	</select>
+
+</sqlMap>

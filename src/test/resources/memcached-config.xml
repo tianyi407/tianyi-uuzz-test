@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	maintSleep:	连接池维护线程的检查间隔时间，单位：毫秒。
+				即，后台一个线程的睡眠时间，该线程用于维护各socket连接在minConn, maxConn之间的状态转移。
+				如果配置小于等于0，则将不会有后台线程维护此连接池。
+	maxIdle:	可用连接池的最长等待时间，单位：毫秒。
+	nagle:		是否启用nagle算法（若要求响应及时，设置为false）。
+	socketTimeOut:	socket的读取等待超时值。
+	socketConnectTo:socket的连接等待超时值。
+	failover:	容错开关；
+				为true时，若当前socket不可用，程序会自动查找可用连接并返回；
+				否则返回NULL。
+	failback:	连接失败恢复开关；
+				为true时，当宕机的服务器启动或中断的网络重连后，这个socket连接还可继续使用；
+				否则将不再使用。
+	aliveCheck:	连接心跳监测开关；
+				为true时，每次通信都会监测连接是否有效（适用于对HA要求比较高的场合）；
+				否则，不监测（适用于对数据丢失要求不是很苛刻，网络情况也不错的场合）。
+	 -->
+<memcached>
+	<socketPool poolName="pool" initConn="5" minConn="5" maxConn="500" maxIdle="21600000" 
+		maintSleep="30000" nagle="false" socketTimeOut="30000" socketConnectTo="30000"
+		failover="true" failback="true" aliveCheck="false">
+		<servers>172.16.23.20:11212</servers>
+		<!-- <servers>10.0.3.41:11212</servers> -->
+		<weights>200,200</weights>
+	</socketPool>
+</memcached>
